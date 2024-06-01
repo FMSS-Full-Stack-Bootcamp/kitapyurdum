@@ -38,6 +38,7 @@ public class CustomerService {
     }
 
     public List<Customer> getCustomerList() {
+        log.info("customer listed. ");
         return customerRepository.getCustomerList();
     }
 
@@ -76,7 +77,7 @@ public class CustomerService {
             log.error(ExceptionMessages.CUSTOMER_NOT_ACTIVE);
             throw new KitapYurdumException(ExceptionMessages.CUSTOMER_NOT_ACTIVE);
         }
-
+        log.info("customer found. {}", email);
         return foundCustomer.get();
     }
 }
