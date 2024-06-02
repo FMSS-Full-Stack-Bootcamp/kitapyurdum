@@ -8,6 +8,8 @@ import com.patika.kitapyurdum.model.Publisher;
 import com.patika.kitapyurdum.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,6 +24,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final PublisherService publisherService;
 
+    @CacheEvict(cacheNames = "products", allEntries = true)
     public void save(ProductSaveRequest request) {
 
         Optional<Publisher> optionalPublisher = publisherService.getByName(request.getPublisherName());
@@ -38,8 +41,11 @@ public class ProductService {
         log.info("product created : {}", product.toString());
     }
 
+    @Cacheable(value = "products", cacheNames = "products")
     public Set<ProductResponse> getAll() {
-        return ProductConverter.toResponse(productRepository.getAll());
+        Set<Product> products = productRepository.getAll();
+        log.info("db'den getirildi. product size:{}", products.size());
+        return ProductConverter.toResponse(products);
     }
 
     public List<Product> getByIdList(List<Long> productIdList) {
