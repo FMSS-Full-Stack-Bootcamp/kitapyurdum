@@ -1,4 +1,4 @@
-package com.patika.kitapyurdum.dto.request;
+package com.patika.kitapyurdum.client.customer.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerSaveRequest {
+public class CustomerResponse {
 
-    private String name;
-    private String surname;
+    private Long id;
     private String email;
-    private String password;
+
 }

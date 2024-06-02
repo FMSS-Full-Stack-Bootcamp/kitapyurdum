@@ -11,11 +11,13 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Builder
 public class Order {
 
     private LocalDateTime createDate;
     private List<Product> productList;
     private String orderCode; //-ordercode generate
     private OrderStatus orderStatus;
+    private Long customerId;
 
 }

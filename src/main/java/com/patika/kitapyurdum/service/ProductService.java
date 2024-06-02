@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -41,4 +42,7 @@ public class ProductService {
         return ProductConverter.toResponse(productRepository.getAll());
     }
 
+    public List<Product> getByIdList(List<Long> productIdList) {
+        return productRepository.getAll().stream().toList();
+    }
 }
