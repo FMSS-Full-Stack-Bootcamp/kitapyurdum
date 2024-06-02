@@ -3,6 +3,7 @@ package com.patika.kitapyurdum.service;
 import com.patika.kitapyurdum.converter.ProductConverter;
 import com.patika.kitapyurdum.dto.request.ProductSaveRequest;
 import com.patika.kitapyurdum.dto.response.ProductResponse;
+import com.patika.kitapyurdum.exception.KitapYurdumException;
 import com.patika.kitapyurdum.model.Product;
 import com.patika.kitapyurdum.model.Publisher;
 import com.patika.kitapyurdum.repository.ProductRepository;
@@ -31,7 +32,7 @@ public class ProductService {
 
         if (optionalPublisher.isEmpty()) {
             log.error("publisher bulamadım : {}", request.getPublisherName());
-            throw new RuntimeException("publisher bulamadım");
+            throw new KitapYurdumException("publisher bulamadım");
         }
 
         Product product = ProductConverter.toProduct(request, optionalPublisher.get());
