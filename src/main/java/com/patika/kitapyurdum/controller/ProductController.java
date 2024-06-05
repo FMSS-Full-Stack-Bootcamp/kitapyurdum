@@ -25,8 +25,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public GenericResponse<Set<ProductResponse>> getAll() {
-        return GenericResponse.success(productService.getAll());
+    public ResponseEntity<GenericResponse<Set<ProductResponse>>> getAll() {
+        return new ResponseEntity<>(GenericResponse.success(productService.getAll()), HttpStatus.OK);
     }
 
 }
