@@ -36,4 +36,8 @@ public class PublisherService {
                 .filter(publisher -> publisher.getName().equals(publisherName))
                 .findFirst();
     }
+
+    public Optional<Publisher> getById(Long publisherId) {
+        return publisherRepository.findById(publisherId);
+    }
 }

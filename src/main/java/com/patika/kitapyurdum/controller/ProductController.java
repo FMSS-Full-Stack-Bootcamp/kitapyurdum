@@ -1,6 +1,7 @@
 package com.patika.kitapyurdum.controller;
 
 import com.patika.kitapyurdum.dto.request.ProductSaveRequest;
+import com.patika.kitapyurdum.dto.request.ProductSearchRequest;
 import com.patika.kitapyurdum.dto.response.GenericResponse;
 import com.patika.kitapyurdum.dto.response.ProductResponse;
 import com.patika.kitapyurdum.service.ProductService;
@@ -25,8 +26,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<GenericResponse<Set<ProductResponse>>> getAll() {
-        return new ResponseEntity<>(GenericResponse.success(productService.getAll()), HttpStatus.OK);
+    public ResponseEntity<GenericResponse<Set<ProductResponse>>> getAll(@RequestBody ProductSearchRequest request) {
+        return new ResponseEntity<>(GenericResponse.success(productService.getAll(request)), HttpStatus.OK);
     }
 
 }

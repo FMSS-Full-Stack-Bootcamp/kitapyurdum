@@ -1,20 +1,11 @@
 package com.patika.kitapyurdum.repository;
 
 import com.patika.kitapyurdum.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Repository
-public class ProductRepository {
-    private Set<Product> productSet = new HashSet<>();
+public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product> {
 
-    public void save(Product product) {
-        productSet.add(product);
-    }
-
-    public Set<Product> getAll() {
-        return productSet;
-    }
 }

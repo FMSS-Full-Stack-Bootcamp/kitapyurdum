@@ -1,19 +1,31 @@
 package com.patika.kitapyurdum.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.Set;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @ToString
 @Builder
+@Entity
+@Table(name = "publisher")
 public class Publisher {
 
-    private String name;
-    private LocalDate creatDate;
-    //private List<Book> bookList; //model olarak bunu yapmadık.
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "created_date")
+    private LocalDate createdDate;
+
+    @OneToMany(mappedBy = "publisher")
+    private Set<Product> products;
 }

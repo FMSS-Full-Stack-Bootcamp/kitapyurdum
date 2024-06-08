@@ -5,16 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProductSaveRequest {
+public class BaseSearchRequest {
 
-    private String name;
-    private BigDecimal amount;
-    private String description;
-    private Long publisherId;
+    private int page;
+    private int size;
+
 }

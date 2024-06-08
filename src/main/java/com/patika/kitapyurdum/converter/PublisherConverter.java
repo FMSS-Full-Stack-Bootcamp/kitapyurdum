@@ -11,7 +11,7 @@ public class PublisherConverter {
     public static Publisher toPublisher(PublisherSaveRequest request) {
         return Publisher.builder()
                 .name(request.getName())
-                .creatDate(request.getCreateDate())
+                .createdDate(request.getCreateDate())
                 .build();
     }
 }

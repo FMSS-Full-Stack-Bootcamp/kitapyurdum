@@ -1,17 +1,10 @@
 package com.patika.kitapyurdum.repository;
 
 import com.patika.kitapyurdum.model.Order;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Repository
-public class OrderRepository {
+public interface OrderRepository extends JpaRepository<Order, Long> {
 
-    private List<Order> orderList = new ArrayList<>();
-
-    public void save(Order order) {
-        orderList.add(order);
-    }
 }

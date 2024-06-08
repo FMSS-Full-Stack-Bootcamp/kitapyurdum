@@ -7,6 +7,7 @@ import com.patika.kitapyurdum.model.Publisher;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,7 +32,7 @@ public class ProductConverter {
                 .build();
     }
 
-    public static Set<ProductResponse> toResponse(Set<Product> products) {
+    public static Set<ProductResponse> toResponse(List<Product> products) {
         return products
                 .stream()
                 .map(ProductConverter::toResponse)

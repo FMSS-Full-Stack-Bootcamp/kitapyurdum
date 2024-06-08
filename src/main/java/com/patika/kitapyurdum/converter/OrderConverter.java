@@ -14,12 +14,12 @@ import java.util.List;
 public class OrderConverter {
 
     public static Order convert(OrderSaveRequest request, Long customerId, List<Product> productList) {
-        return Order.builder()
-                .createDate(LocalDateTime.now())
-                .customerId(customerId)
-                .orderStatus(OrderStatus.INITIAL)
-                .orderCode("order-code" + request.getCustomerId())
-                .productList(productList)
-                .build();
+        Order order = new Order();
+        order.setCreateDate(LocalDateTime.now());
+        order.setCustomerId(customerId);
+        order.setOrderStatus(OrderStatus.INITIAL);
+        order.setOrderCode("order-code" + request.getCustomerId());
+        order.setProductList(productList);
+        return order;
     }
 }

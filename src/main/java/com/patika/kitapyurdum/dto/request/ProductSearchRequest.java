@@ -9,12 +9,12 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ProductSaveRequest {
+@AllArgsConstructor
+public class ProductSearchRequest extends BaseSearchRequest {
 
     private String name;
     private BigDecimal amount;
-    private String description;
-    private Long publisherId;
+    private String publisherName;
+    private String sort;
 }
