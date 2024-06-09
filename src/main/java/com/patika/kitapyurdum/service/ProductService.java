@@ -12,12 +12,14 @@ import com.patika.kitapyurdum.repository.PublisherRepository;
 import com.patika.kitapyurdum.repository.spesification.ProductSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,8 +34,9 @@ public class ProductService {
     private final PublisherRepository publisherRepository;
 
     //@CacheEvict(cacheNames = "products", allEntries = true)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = KitapYurdumException.class)
     public void save(ProductSaveRequest request) {
-
+        log.info("Transaction 1: {}", TransactionAspectSupport.currentTransactionStatus().hashCode());
         Optional<Publisher> optionalPublisher = publisherRepository.findById(request.getPublisherId());
 
         if (optionalPublisher.isEmpty()) {
@@ -41,14 +44,21 @@ public class ProductService {
             throw new KitapYurdumException("publisher bulunamadı");
         }
 
+        Product savedProduct = savedProduct(request, optionalPublisher);
+
+        log.info("product created : {}", savedProduct.getId());
+    }
+
+    //@Transactional(propagation = Propagation.REQUIRES_NEW)
+    private Product savedProduct(ProductSaveRequest request, Optional<Publisher> optionalPublisher) {
+        log.info("Transaction 1: {}", TransactionAspectSupport.currentTransactionStatus().hashCode());
         Product product = ProductConverter.toProduct(request, optionalPublisher.get());
-
-        productRepository.save(product);
-
-        log.info("product created : {}", product);
+        Product savedProduct = productRepository.save(product);
+        return savedProduct;
     }
 
     //@Cacheable(value = "products", cacheNames = "products")
+    @Transactional(readOnly = true)
     public Set<ProductResponse> getAll(ProductSearchRequest request) {
 
         Specification<Product> productSpecification = ProductSpecification.initProductSpecification(request);

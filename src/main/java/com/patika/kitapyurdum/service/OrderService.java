@@ -14,6 +14,8 @@ import com.patika.kitapyurdum.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class OrderService {
     private final ProductService productService;
     private final NotificationProducer notificationProducer;
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void create(OrderSaveRequest request) {
 
         CustomerResponse customerResponse = customerService.getCustomerById(request.getCustomerId());

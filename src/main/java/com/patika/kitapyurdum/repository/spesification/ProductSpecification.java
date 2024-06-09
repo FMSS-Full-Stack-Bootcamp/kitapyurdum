@@ -23,7 +23,7 @@ public class ProductSpecification {
             List<Predicate> predicateList = new ArrayList<>();
 
             if (request.getName() != null) {
-                predicateList.add(criteriaBuilder.equal(root.get("name"), request.getName()));
+                predicateList.add(criteriaBuilder.equal(root.get("name"), request.getName())); //like ile aramaya çevirin
             }
 
             if (request.getAmount() != null) {

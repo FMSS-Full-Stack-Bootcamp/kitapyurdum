@@ -11,7 +11,6 @@ import java.util.Objects;
 @AllArgsConstructor
 @Getter
 @Setter
-@ToString
 @Builder
 @Entity
 @Table(name = "product")

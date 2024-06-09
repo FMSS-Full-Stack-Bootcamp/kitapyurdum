@@ -7,6 +7,8 @@ import com.patika.kitapyurdum.repository.PublisherRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,13 +20,14 @@ public class PublisherService {
 
     private final PublisherRepository publisherRepository;
 
+    @Transactional(propagation = Propagation.REQUIRED)
     public void save(PublisherSaveRequest request) {
 
         Publisher publisher = PublisherConverter.toPublisher(request);
 
-        publisherRepository.save(publisher);
+        Publisher savedPublisher = publisherRepository.save(publisher);
 
-        log.info("publisher saved. {}", publisher.toString());
+        log.info("publisher saved. {}", savedPublisher.getId());
     }
 
     public List<Publisher> getAllPublishers() {
