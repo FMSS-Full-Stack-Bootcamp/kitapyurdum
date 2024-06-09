@@ -31,30 +31,24 @@ import java.util.Set;
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final PublisherRepository publisherRepository;
+    private final PublisherService publisherService;
 
     //@CacheEvict(cacheNames = "products", allEntries = true)
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = KitapYurdumException.class)
     public void save(ProductSaveRequest request) {
-        log.info("Transaction 1: {}", TransactionAspectSupport.currentTransactionStatus().hashCode());
-        Optional<Publisher> optionalPublisher = publisherRepository.findById(request.getPublisherId());
+
+        Optional<Publisher> optionalPublisher = publisherService.getById(request.getPublisherId());
 
         if (optionalPublisher.isEmpty()) {
             log.error("publisher bulamadım : {}", request.getPublisherId());
             throw new KitapYurdumException("publisher bulunamadı");
         }
 
-        Product savedProduct = savedProduct(request, optionalPublisher);
+        Product product = ProductConverter.toProduct(request, optionalPublisher.get());
+
+        Product savedProduct = productRepository.save(product);
 
         log.info("product created : {}", savedProduct.getId());
-    }
-
-    //@Transactional(propagation = Propagation.REQUIRES_NEW)
-    private Product savedProduct(ProductSaveRequest request, Optional<Publisher> optionalPublisher) {
-        log.info("Transaction 1: {}", TransactionAspectSupport.currentTransactionStatus().hashCode());
-        Product product = ProductConverter.toProduct(request, optionalPublisher.get());
-        Product savedProduct = productRepository.save(product);
-        return savedProduct;
     }
 
     //@Cacheable(value = "products", cacheNames = "products")
